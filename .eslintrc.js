@@ -11,7 +11,12 @@ module.exports = {
     parser: 'babel-eslint'
   },
   rules: {
+    "space-before-function-paren": 0,
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        // 缩进
+    // 'indent': 2,
+    // 'indent': [2, 2, {"SwitchCase": 1}],
+    "indent": "off",
   }
 }
