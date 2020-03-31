@@ -14,7 +14,6 @@ Vue.prototype.$qs = qs
 /* 配置请求根路径 */
 axios.defaults.baseURL = '/api'
 axios.interceptors.request.use(config => {
-  console.log(config)
   config.headers.Authorization = window.sessionStorage.getItem('token')
   /* 最后必须return config */
   return config

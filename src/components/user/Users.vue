@@ -333,7 +333,10 @@ export default {
      iditem.id = id
      const ids = []
      ids.push(iditem)
-      const { data: res } = await this.$http.delete('/mgmt/PersonStructure/del', JSON.parse(JSON.stringify(ids)))
+     console.log(ids)
+      const { data: res } = await this.$http.delete('/mgmt/PersonStructure/del', {
+        data: ids
+      })
       if (res.code !== '200') {
         return this.$message.error('删除用户失败')
       }
