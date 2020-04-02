@@ -6,6 +6,10 @@ import Welcome from '../components/welcome.vue'
 import Users from '../components/user/Users.vue'
 import Rights from '../components/power/Rights.vue'
 import Roles from '../components/power/Roles.vue'
+import NewsList from '../components/news/NewsList.vue'
+import Addnews from '../components/news/Addnews.vue'
+import Goods from '../components/goods/GoodsList.vue'
+import Addgoods from '../components/goods/AddGoods.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -48,6 +52,26 @@ const routes = [
        {
         path: '/role',
         component: Roles
+      },
+       /* 新闻列表 */
+       {
+        path: '/newsmsg',
+        component: NewsList
+      },
+      /* 添加新闻 */
+      {
+        path: '/newsmsg/add',
+        component: Addnews
+      },
+       /* 商品列表 */
+       {
+        path: '/goodsList',
+        component: Goods
+      },
+      /* 添加商品 */
+      {
+        path: '/goodsList/add',
+        component: Addgoods
       }
     ]
   }
