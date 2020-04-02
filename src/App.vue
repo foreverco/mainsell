@@ -12,5 +12,7 @@ export default {
 </script>
 
 <style>
-
+  .el-checkbox{
+    margin: 0 10px 0 0 !important
+  }
 </style>
