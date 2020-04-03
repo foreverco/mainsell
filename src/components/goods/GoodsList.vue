@@ -11,7 +11,7 @@
       <el-row>
         <el-button type='primary' @click='toAddGoods'>添加商品</el-button>
       </el-row>
-      <el-table :data="newsList" border stripe>
+      <el-table :data="listData.records" border stripe>
         <el-table-column type="index"></el-table-column>
         <el-table-column label="新闻标题" prop="title"></el-table-column>
         <el-table-column label="新闻日期" prop="date"></el-table-column>
@@ -30,13 +30,69 @@
          </el-table-column>
       </el-table>
     </el-card>
+    <!-- 分页 -->
+    <el-row type="flex" class="row-bg" justify="center">
+      <el-col  :span="15" :offset="6">
+        <PagingQuery
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :total="newsList.total"
+          :size="newsList.size"
+          :current="newsList.current"
+        ></PagingQuery>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
+import PagingQuery from '@/components/pagination/Pagination'
+const baseListData = () => {
+  return {
+    records: [
+        {
+          title: '哈哈哈',
+          date: '2020-03-30',
+          imgUrlList: [
+            { imgUrl: 'http://192.168.1.187/group1/M00/00/04/wKgBu15oRNOAI0PrAABnEUNmlCM217.jpg' },
+            { imgUrl: 'http://192.168.1.187/group1/M00/00/04/wKgBu15oncSAEmKMAABa1uGUo-k756.jpg' }
+          ]
+        },
+        {
+          title: '哈哈哈',
+          date: '2020-03-30',
+          imgUrlList: [
+            { imgUrl: 'http://192.168.1.187/group1/M00/00/04/wKgBu15oncSAEmKMAABa1uGUo-k756.jpg' },
+            { imgUrl: 'http://192.168.1.187/group1/M00/00/04/wKgBu15oncSAEmKMAABa1uGUo-k756.jpg' }
+          ]
+        },
+        {
+          title: '哈哈哈',
+          date: '2020-03-30',
+          imgUrlList: [
+            { imgUrl: 'http://192.168.1.187/group1/M00/00/04/wKgBu15oncSAEmKMAABa1uGUo-k756.jpg' },
+            { imgUrl: 'http://192.168.1.187/group1/M00/00/04/wKgBu15oncSAEmKMAABa1uGUo-k756.jpg' }
+          ]
+        },
+        {
+          title: '哈哈哈',
+          date: '2020-03-30',
+          imgUrlList: [
+            { imgUrl: 'http://192.168.1.187/group1/M00/00/04/wKgBu15oncSAEmKMAABa1uGUo-k756.jpg' },
+            { imgUrl: 'http://192.168.1.187/group1/M00/00/04/wKgBu15oncSAEmKMAABa1uGUo-k756.jpg' }
+          ]
+        }
+      ],
+    current: 1,
+    size: 10,
+    total: 0,
+    pages: 0
+  }
+}
 export default {
   data() {
     return {
+      listData: baseListData(),
       newsList: [
         {
           title: '哈哈哈',
@@ -73,14 +129,50 @@ export default {
       ]
     }
   },
+  components: {
+    PagingQuery
+  },
   created() {},
+  mounted() {
+    this.getGoodsList(1)
+  },
   methods: {
     toAddGoods() {
       this.$router.push('/goodsList/add')
+    },
+        async getGoodsList(page, size, p) {
+      if (page) {
+        this.listData.current = page
+      }
+      if (size) {
+        this.listData.size = size
+      }
+      const params = {
+        page: this.listData.current,
+        pageSize: this.listData.size
+      }
+      if (p) {
+        for (const item in p) {
+          params[item] = p[item]
+          delete params.startEndTime
+        }
+      }
+      const res = await this.$http.get('/hurui/goods/goodsList')
+      console.log(res)
+      // this.listData = res.data
+    },
+    handleCurrentChange(page) {
+      this.getGoodsList(page, this.listData.size)
+    },
+    handleSizeChange(size) {
+      this.getGoodsList(1, size)
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+.row-bg{
+  // border:1px solid red;
+}
 </style>

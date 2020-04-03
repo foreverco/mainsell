@@ -64,7 +64,7 @@ export default {
       this.$refs.loginFormRef.validate(async valid => {
         console.log(valid)
         if (!valid) return false
-        const res = await this.$http.post('login', this.loginForm)
+        const res = await this.$http.post('/api/login', this.loginForm)
         console.log(this.loginForm.password)
         console.log(res)
         console.log(res.headers.authorization)

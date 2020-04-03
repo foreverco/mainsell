@@ -218,7 +218,7 @@ export default {
   },
   methods: {
     async getUserList() {
-      const { data: res } = await this.$http.get('/mgmt/PersonStructure', {
+      const { data: res } = await this.$http.get('/api/mgmt/PersonStructure', {
         params: this.queryInfo
       })
       console.log(res)
@@ -246,7 +246,7 @@ export default {
       params.id = userInfo.id
       console.log(params)
       const { data: res } = await this.$http.post(
-        '/mgmt/PersonStructure',
+        '/api/mgmt/PersonStructure',
         params
       )
       console.log(res)
@@ -273,7 +273,7 @@ export default {
             .substr(3, length) + Date.now()
         ).toString(5)
         const { data: res } = await this.$http.put(
-          '/mgmt/PersonStructure',
+          '/api/mgmt/PersonStructure',
           params
         )
         if (res.code !== '200') {
@@ -302,7 +302,7 @@ export default {
       if (!valid) return false
       const params = this.editForm
       console.log(params)
-      const { data: res } = await this.$http.post('/mgmt/PersonStructure', params)
+      const { data: res } = await this.$http.post('/api/mgmt/PersonStructure', params)
       console.log(res)
       if (res.code !== 200) {
         return this.$message.error('用户信息修改失败')
@@ -334,7 +334,7 @@ export default {
      const ids = []
      ids.push(iditem)
      console.log(ids)
-      const { data: res } = await this.$http.delete('/mgmt/PersonStructure/del', {
+      const { data: res } = await this.$http.delete('/api/mgmt/PersonStructure/del', {
         data: ids
       })
       if (res.code !== '200') {

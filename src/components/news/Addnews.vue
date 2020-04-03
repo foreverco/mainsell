@@ -58,10 +58,10 @@
     <el-dialog
   title="图片预览"
   :visible.sync="previewVisible"
-  width="50%">
+  width="40%">
   <img :src="previewPath" alt="" class='previewImg'>
-  <span slot="footer" class="dialog-footer">
-  </span>
+  <!-- <span slot="footer" class="dialog-footer"> -->
+  <!-- </span> -->
 </el-dialog>
   </div>
 </template>
@@ -126,5 +126,8 @@ export default {
       position: absolute;
     left: 50%;
     transform: translateX(-50%);
+}
+.previewImg {
+  width:100%;
 }
 </style>
