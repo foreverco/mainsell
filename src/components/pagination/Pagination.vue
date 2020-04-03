@@ -6,7 +6,7 @@
     @current-change="handleCurrentChange"
     :page-size="size"
     :total="total"
-    :page-sizes="[10,15,20,30]"
+    :page-sizes="[1,2,3,4]"
     layout="total,sizes,prev, pager, next"
   ></el-pagination>
 </template>

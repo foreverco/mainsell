@@ -44,13 +44,21 @@
               <el-input v-model="addForm.goodsStock" type="number" min="0"></el-input>
             </el-form-item>
             <el-form-item label="商品类型" prop="goodsType">
-              <el-cascader
+              <!-- <el-cascader
                 v-model="addForm.goodsType"
                 expand-trigger="hover"
                 :options="cateList"
                 :props="cateProps"
                 @change="handleChange"
-              ></el-cascader>
+              ></el-cascader>-->
+              <el-select v-model="addForm.goodsType" placeholder="请选择">
+                <el-option
+                  v-for="item in goodsTypes"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-tab-pane>
           <el-tab-pane label="商品参数" name="1">
@@ -79,8 +87,8 @@
               :on-preview="handlePreview"
               :on-remove="handleRemove"
               list-type="picture"
-              :headers='headerObj'
-              :on-success='handleSuccess'
+              :headers="headerObj"
+              :on-success="handleSuccess"
             >
               <el-button size="small" type="primary">点击上传</el-button>
               <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
@@ -88,22 +96,18 @@
           </el-tab-pane>
           <el-tab-pane label="商品内容" name="4">
             <!-- 富文本编辑器组件 -->
-            <quill-editor v-model='addForm.goodsContext'></quill-editor>
+            <quill-editor v-model="addForm.goodsContext"></quill-editor>
             <!-- 添加商品按钮 -->
-            <el-button type='primary' class='btnAdd' @click='add'>添加商品</el-button>
+            <el-button type="primary" class="btnAdd" @click="add">添加商品</el-button>
           </el-tab-pane>
         </el-tabs>
       </el-form>
     </el-card>
     <!-- 图片预览 -->
-    <el-dialog
-  title="图片预览"
-  :visible.sync="previewVisible"
-  width="50%">
-  <img :src="previewPath" alt="" class='previewImg'>
-  <span slot="footer" class="dialog-footer">
-  </span>
-</el-dialog>
+    <el-dialog title="图片预览" :visible.sync="previewVisible" width="50%">
+      <img :src="previewPath" alt class="previewImg" />
+      <span slot="footer" class="dialog-footer"></span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -117,9 +121,9 @@ export default {
         goodsPrice: 0,
         goodsStock: 0,
         /* 商品所属的分类数组 */
-        goodsType: [],
+        goodsType: '',
         /* 图片数组 */
-        pics: [],
+        urls: [],
         /* 商品详情描述 */
         goodsContext: ''
       },
@@ -138,6 +142,11 @@ export default {
         ]
       },
       /* 商品分类列表 */
+      goodsTypes: [
+        { value: 'first', label: '主打饮品' },
+        { value: 'second', label: '传统蒙药' },
+        { value: 'third', label: '药食同源' }
+      ],
       cateList: [
         {
           value: 'zhinan',
@@ -440,10 +449,10 @@ export default {
     beforeTabLeave(activeName, oldActiveName) {
       // console.log('即将离开的标签名' + oldActiveName)
       // console.log('即将到达的标签名' + activeName)
-      if (oldActiveName === '0' && this.addForm.goodsType.length !== 3) {
-        this.$message.error('请选择商品类型')
-        return false
-      }
+      // if (oldActiveName === '0' && this.addForm.goodsType.length !== 3) {
+      //   this.$message.error('请选择商品类型')
+      //   return false
+      // }
     },
     tabClick() {
       console.log(this.activeIndex)
@@ -465,27 +474,27 @@ export default {
     handleRemove(file) {
       console.log(file)
       const filePath = file.response.data
-      const i = this.addForm.pics.findIndex(x =>
-        x.pic === filePath
-      )
-      this.addForm.pics.splice(i, 1)
-      console.log(this.addForm.pics)
+      const i = this.addForm.urls.findIndex(x => x.goodsUrl === filePath)
+      this.addForm.urls.splice(i, 1)
+      console.log(this.addForm.urls)
     },
     /* 监听图片上传成功的时间 */
     handleSuccess(response) {
       console.log(response)
-      const picInfo = { pic: response.data }
-      this.addForm.pics.push(picInfo)
-      console.log(this.addForm.pics)
+      const picInfo = { goodsUrl: response.data }
+      this.addForm.urls.push(picInfo)
+      console.log(this.addForm.urls)
     },
     /* 添加商品 */
     add() {
       console.log(this.addForm)
-      this.$refs.addFormRef.validate(valid => {
+      this.$refs.addFormRef.validate(async valid => {
         if (!valid) {
           return this.$message.error('请填写必要的表单项')
         }
         /* 执行添加的业务逻辑 */
+        const res = await this.$http.post('/hurui/goods/addGoods', this.addForm)
+        console.log(res)
       })
     }
   }
@@ -493,9 +502,9 @@ export default {
 </script>
 <style lang="less" scoped>
 .previewImg {
-  width:100%;
+  width: 100%;
 }
-.btnAdd{
-  margin-top:15px;
+.btnAdd {
+  margin-top: 15px;
 }
 </style>

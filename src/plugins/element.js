@@ -33,7 +33,9 @@ import {
   Cascader,
   Checkbox,
   CheckboxGroup,
-  Upload
+  Upload,
+  Select,
+  Option
 } from 'element-ui'
 
 Vue.use(Button)
@@ -68,5 +70,7 @@ Vue.use(Cascader)
 Vue.use(Checkbox)
 Vue.use(CheckboxGroup)
 Vue.use(Upload)
+Vue.use(Select)
+Vue.use(Option)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

@@ -21,7 +21,6 @@
         <el-table-column
           label="图片信息"
           prop="imgUrlList"
-          width="300"
           style="display:flex;justify-content: center"
         >
           <!-- <template slot-scope="scope">
@@ -167,7 +166,6 @@ export default {
       }
       const res = await this.$http.get('/hurui/goods/goodsList')
       console.log(res)
-      this.listData = res.data
     },
     handleCurrentChange(page) {
       this.getNewsList(page, this.listData.size)
