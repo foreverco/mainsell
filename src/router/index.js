@@ -10,6 +10,7 @@ import NewsList from '../components/news/NewsList.vue'
 import Addnews from '../components/news/Addnews.vue'
 import Goods from '../components/goods/GoodsList.vue'
 import Addgoods from '../components/goods/AddGoods.vue'
+import Menu from '../components/pms/menu/components/Menu.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -72,6 +73,11 @@ const routes = [
       {
         path: '/goodsList/add',
         component: Addgoods
+      },
+       /* 添加商品 */
+       {
+        path: '/menu',
+        component: Menu
       }
     ]
   }

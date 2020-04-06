@@ -35,7 +35,8 @@ import {
   CheckboxGroup,
   Upload,
   Select,
-  Option
+  Option,
+  Tree
 } from 'element-ui'
 
 Vue.use(Button)
@@ -72,5 +73,6 @@ Vue.use(CheckboxGroup)
 Vue.use(Upload)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Tree)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
